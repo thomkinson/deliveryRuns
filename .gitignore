@@ -75,3 +75,9 @@ artifacts/
 # Chutzpah Test files
 _Chutzpah*
 
+# VS Code
+.vscode/*
+
+# Distribution
+css/
+js/

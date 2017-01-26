@@ -4,16 +4,17 @@
   "description": "Web Project for Delivery Runs",
   "main": "gulpfile.js",
   "dependencies": {
+    "babel-core": "^6.0.0",
+    "clean-css": "^4.0.1",
     "del": "^2.2.0",
     "event-stream": "^3.3.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
-    "gulp-babel": "^5.2.1",
-    "gulp-clean-css": "^2.3.2",
     "gulp-cache": "^0.2.8",
+    "gulp-clean-css": "^2.3.2",
     "gulp-concat": "^2.6.0",
     "gulp-if": "^2.0.1",
-    "gulp-imagemin": "^2.2.1",    
+    "gulp-imagemin": "^2.2.1",
     "gulp-load-plugins": "^1.2.4",
     "gulp-minify-html": "^1.0.0",
     "gulp-plumber": "^1.1.0",
@@ -26,9 +27,14 @@
     "yargs": "^4.7.1"
   },
   "devDependencies": {
+    "babel-plugin-transform-es2015-modules-strip": "^0.1.0",
+    "babel-preset-es2015": "^6.22.0",
     "browser-sync": "^2.13.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean-css": "^2.3.2",
     "gulp-eslint": "^2.0.0",
-    "gulp-notify": "^2.2.0"
+    "gulp-notify": "^2.2.0",
+    "gulp-uglify": "^1.5.4"
   },
   "engines": {
     "node": ">=6.0.0"
