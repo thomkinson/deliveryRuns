@@ -15,7 +15,7 @@
     const reload = browserSync.reload;
 
     // Remove existing docs and dist build
-    gulp.task('clean', del.bind(null, ['docs/dist', 'dist']));
+    gulp.task('clean', del.bind(null, ['docs/dist', 'dist', 'js/lib', 'css/lib']));
 
     // Build LibSass files
     gulp.task('styles', function() {
@@ -25,14 +25,14 @@
             .pipe($.sass().on('error', $.sass.logError))
             .pipe($.autoprefixer({browsers: ['last 1 version']}))
             .pipe($.rename({ suffix: '.min' }))
-            .pipe(gulp.dest('css'))
+            .pipe(gulp.dest('css/lib'))
             .pipe(cleanCSS({ compatibility: '*' }))
             .pipe($.sourcemaps.write('.'))            
-            .pipe(gulp.dest('css'));
+            .pipe(gulp.dest('css/lib'));
     });
 
     // Build JavaScript files 
-    gulp.task('scripts', function() {
+    gulp.task('bootstrap', function() {
         return gulp.src(['./bower_components/bootstrap/js/src/util.js', 
                          './bower_components/bootstrap/js/src/alert.js', 
                          './bower_components/bootstrap/js/src/button.js', 
@@ -51,8 +51,21 @@
             .pipe($.uglify({ preserveComments: 'license' }))
             .pipe($.rename({ suffix: '.min' }))
             .pipe($.sourcemaps.write('maps'))
-            .pipe(gulp.dest('js'));
+            .pipe(gulp.dest('js/lib/bootstrap'));
     });
+
+    gulp.task('angularjs', function() {
+        return gulp.src(['./bower_components/angular/angular.js'])
+            .pipe($.sourcemaps.init())
+            .pipe($.plumber())
+            .pipe($.uglify({ preserveComments: 'license' }))
+            .pipe($.rename({ suffix: '.min' }))
+            .pipe($.sourcemaps.write('maps'))
+            .pipe(gulp.dest('js/lib/ng'));
+    });
+
+
+    gulp.task('scripts', ['bootstrap', 'angularjs']);
 
     // Watch tasks
 
