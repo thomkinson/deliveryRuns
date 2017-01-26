@@ -1,0 +1,45 @@
+{
+  "name": "delivery.runs",
+  "version": "1.0.0",
+  "description": "Web Project for Delivery Runs",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "del": "^2.2.0",
+    "event-stream": "^3.3.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-cache": "^0.2.8",
+    "gulp-concat": "^2.6.0",
+    "gulp-if": "^2.0.1",
+    "gulp-imagemin": "^2.2.1",    
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-minify-html": "^1.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.0.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "^3.0.7",
+    "yargs": "^4.7.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.13.0",
+    "gulp-eslint": "^2.0.0",
+    "gulp-notify": "^2.2.0"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thomkinson/deliveryRuns.git"
+  },
+  "author": "Matt Thompson",
+  "license": "MIT"
+}
