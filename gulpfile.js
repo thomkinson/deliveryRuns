@@ -15,7 +15,7 @@
     const reload = browserSync.reload;
 
     // Remove existing docs and dist build
-    gulp.task('clean', del.bind(null, ['docs/dist', 'dist', 'js/lib', 'css/lib']));
+    gulp.task('clean', del.bind(null, ['docs/dist', 'dist', 'js/lib', 'src/client/lib/boostrap']));
 
     // Build LibSass files
     gulp.task('styles', function() {
@@ -25,10 +25,10 @@
             .pipe($.sass().on('error', $.sass.logError))
             .pipe($.autoprefixer({browsers: ['last 1 version']}))
             .pipe($.rename({ suffix: '.min' }))
-            .pipe(gulp.dest('css/lib'))
+            .pipe(gulp.dest('src/client/lib/bootstrap'))
             .pipe(cleanCSS({ compatibility: '*' }))
             .pipe($.sourcemaps.write('.'))            
-            .pipe(gulp.dest('css/lib'));
+            .pipe(gulp.dest('src/client/lib/bootstrap'));
     });
 
     // Build JavaScript files 
@@ -51,7 +51,7 @@
             .pipe($.uglify({ preserveComments: 'license' }))
             .pipe($.rename({ suffix: '.min' }))
             .pipe($.sourcemaps.write('maps'))
-            .pipe(gulp.dest('js/lib/bootstrap'));
+            .pipe(gulp.dest('src/client/lib/bootstrap'));
     });
 
     gulp.task('angularjs', function() {
@@ -61,7 +61,7 @@
             .pipe($.uglify({ preserveComments: 'license' }))
             .pipe($.rename({ suffix: '.min' }))
             .pipe($.sourcemaps.write('maps'))
-            .pipe(gulp.dest('js/lib/ng'));
+            .pipe(gulp.dest('src/client/lib/ng'));
     });
 
 

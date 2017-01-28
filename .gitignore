@@ -79,5 +79,4 @@ _Chutzpah*
 .vscode/*
 
 # Distribution
-css/
-js/
+src/client/lib/*
