@@ -35,16 +35,21 @@
      * @param  {Array}   path - array of paths to delete
      * @param  {Function} done - callback when complete
      */
-    function clean(path, done) {
+    function clean(path) {
         log('Cleaning: ' + $.util.colors.blue(path));
-        del(path, done);
+        return del(path);
     }
 
     /**
      * Remove all styles from the build and temp folders
      * @param  {Function} done - callback when complete
      */
-    gulp.task('clean-styles', del.bind(null, [config.lib + '**/*.css', config.lib + '**/*.css.map']));
+    gulp.task('clean-styles', function(done) {
+        var files = [].concat(
+            config.lib + '**/*.css',
+            config.lib + '**/*.css.map');
+        return clean(files);
+    });
 
     /**
      * Compile sass to css
@@ -70,7 +75,12 @@
      * Remove all js from the lib folder
      * @param  {Function} done - callback when complete
      */
-    gulp.task('clean-code', del.bind(null, [config.lib + '**/*.js', config.lib + '**/*.js.map']));
+    gulp.task('clean-code', function(done) {
+        var files = [].concat(
+            config.lib + '**/*.js',
+            config.lib + '**/*.js.map');
+        return clean(files, done);
+    });
 
     // Build JavaScript files 
     gulp.task('bootstrap', function() {
