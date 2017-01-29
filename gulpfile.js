@@ -6,30 +6,71 @@
           $ = require('gulp-load-plugins')({ rename: { 'gulp-if': 'gulpif' } }),
           es = require('event-stream'),
           del = require('del'),
-          gutil = require('gulp-util'),
+          util = require('gulp-util'),
+          cleanCSS = require('gulp-clean-css'),
           browserSync = require('browser-sync'),
-          fs = require('fs');
-
-    var cleanCSS = require('gulp-clean-css');
+          fs = require('fs'),
+          config = require('./gulp.config')();
 
     const reload = browserSync.reload;
 
-    // Remove existing docs and dist build
-    gulp.task('clean', del.bind(null, ['docs/dist', 'dist', 'js/lib', 'src/client/lib/boostrap']));
+    /**
+     * Log a message or series of messages using chalk's blue color.
+     * Can pass in a string, object or array.
+     */
+    function log(msg) {
+        if (typeof (msg) === 'object') {
+            for (var item in msg) {
+            if (msg.hasOwnProperty(item)) {
+                $.util.log($.util.colors.blue(msg[item]));
+            }
+            }
+        } else {
+            $.util.log($.util.colors.blue(msg));
+        }
+    }
 
-    // Build LibSass files
+    /**
+     * Delete all files in a given path
+     * @param  {Array}   path - array of paths to delete
+     * @param  {Function} done - callback when complete
+     */
+    function clean(path, done) {
+        log('Cleaning: ' + $.util.colors.blue(path));
+        del(path, done);
+    }
+
+    /**
+     * Remove all styles from the build and temp folders
+     * @param  {Function} done - callback when complete
+     */
+    gulp.task('clean-styles', del.bind(null, [config.lib + '**/*.css', config.lib + '**/*.css.map']));
+
+    /**
+     * Compile sass to css
+     * @return {Stream}
+     */
     gulp.task('styles', function() {
-        gulp.src('./bower_components/bootstrap/scss/bootstrap.scss')
-            .pipe($.plumber())
+        log('Compiling SASS --> CSS');
+
+        return gulp
+            .src(config.sass)
+            .pipe($.plumber()) // exit gracefully if something fails after this
             .pipe($.sourcemaps.init())
             .pipe($.sass().on('error', $.sass.logError))
             .pipe($.autoprefixer({browsers: ['last 1 version']}))
             .pipe($.rename({ suffix: '.min' }))
-            .pipe(gulp.dest('src/client/lib/bootstrap'))
+            .pipe(gulp.dest(config.lib + 'bootstrap'))
             .pipe(cleanCSS({ compatibility: '*' }))
             .pipe($.sourcemaps.write('.'))            
-            .pipe(gulp.dest('src/client/lib/bootstrap'));
+            .pipe(gulp.dest(config.lib + 'bootstrap'));
     });
+
+    /**
+     * Remove all js from the lib folder
+     * @param  {Function} done - callback when complete
+     */
+    gulp.task('clean-code', del.bind(null, [config.lib + '**/*.js', config.lib + '**/*.js.map']));
 
     // Build JavaScript files 
     gulp.task('bootstrap', function() {
@@ -65,7 +106,7 @@
     });
 
 
-    gulp.task('scripts', ['bootstrap', 'angularjs']);
+    gulp.task('code', ['bootstrap', 'angularjs']);
 
     // Watch tasks
 
@@ -74,9 +115,11 @@
         gulp.watch('js/src/*.js', ['scripts']);
     });
 
-    gulp.task('dist', ['styles', 'scripts']);
+    gulp.task('clean', ['clean-code', 'clean-styles']);
 
-    gulp.task('default', ['clean'], () => {
+    gulp.task('dist', ['styles', 'code']);
+
+    gulp.task('build',['clean'], function() {
         gulp.start('dist');
     });
 })();
